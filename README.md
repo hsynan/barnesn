@@ -1,22 +1,9 @@
 # barnesn
 
-This repo contains code for implementing Barnes objective analysis, which is used for interpolating scattered data points onto a grid.  The code is translated from the [Barnes interpolation (Barnes objective analysis) toolbox](https://www.mathworks.com/matlabcentral/fileexchange/58937-barnes-interpolation-barnes-objective-analysis), originally written in Matlab by Lena Bartell. <br>
+This repo contains code for implementing Barnes objective analysis, which is used for interpolating scattered data points onto a fixed grid. The code is translated from the [Barnes interpolation (Barnes objective analysis) toolbox](https://www.mathworks.com/matlabcentral/fileexchange/58937-barnes-interpolation-barnes-objective-analysis), originally written in Matlab by Lena Bartell. <br>
 
 Examples using the functions are in the [examples directory](https://github.com/hsynan/barnesn/blob/main/examples/barnes_examples.ipynb) <br>
-The functions themselves are in the [barnesn directory]()
-
-**Original description (from Matlab):** <br>
-   BARNESN: Barnes smoothing interpolation of unstructured data
-```Vq = BARNESN(X, V, Xv)``` returns the smoothing interpolation of
-D-dimensional observations ```V(X)``` at query points ```Xq```. Query points ```Xq``` are
-created by meshing the vectors in the cell array Xv that define the
-grid in each dimension. Smoothing interpolation is performed using
-the Koch form of Barnes objective analysis (Daley 1993). Roughly, (in 2D) the
-interpolated value ```(vq)``` at gridpoint ```(xq, yq)``` is determined as a
-weighted-sum of the values ```(v)``` at data points ```(x, y)```, based on the
-gaussian weighting function ```exp(-r^2 / s / g^j)```, where r is the
-euclidian distance from ```(xq, yq)``` to ```(x, y)```, s is the Gaussian Variance,
-and ```g``` is the Convergence Parameter.
+The functions themselves are in the [barnesn directory](https://github.com/hsynan/barnesn/blob/main/barnesn/barnesn.py)
 
 **Bibliography:**
 * Barnes, Stanley L. "Mesoscale objective map analysis using weighted
