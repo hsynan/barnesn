@@ -30,19 +30,14 @@ Meteorology 22.9 (1983): 1487-1503.
 Press, 1993.
 -
 '''
-
-from sklearn.metrics import mean_squared_error
 from math import sqrt
 from scipy.interpolate import LinearNDInterpolator
-import pandas as pd
 import numpy as np
 import math
-import matplotlib.pyplot as plt
-import cartopy
 import warnings
 from scipy.spatial.distance import cdist
 
-def calc_Verror(V, Vq, Xcell,ii, data): 
+def calc_Verror(V, Vq, Xcell,ii, data, gridX, gridY): 
     interp = LinearNDInterpolator(list(zip(gridX, gridY)), Vq.flatten())
     interp_v = interp(data.lat,data.lon)
     Verr = V - interp_v 
@@ -55,7 +50,7 @@ def calc_Verror(V, Vq, Xcell,ii, data):
     print('Barnes iteration ' + str(ii) + ', average RMS error is ' + str(rmse))
     return rmse, Verr
 
-def parse_inputs(X, V, Xv,n_interations=3, convergenceparam=0.2, gaussianvariance=float('nan')): 
+def parse_inputs(X, V, Xv,Xq, n_interations=3, convergenceparam=0.2, gaussianvariance=float('nan')): 
     params={}
     params['iterations']=n_interations
     params['gaussianvariance']=gaussianvariance
@@ -85,7 +80,7 @@ def parse_inputs(X, V, Xv,n_interations=3, convergenceparam=0.2, gaussianvarianc
     if math.isnan(params['gaussianvariance'])== True:
         params['gaussianvariance'] = params['optimal_var']
     else: 
-        raise Exception('Gaussian variance is small. The optimal value is '+str(optimal_var))
+        raise Exception('Gaussian variance is small. The optimal value is '+str( params['optimal_var']))
     
     params['gaussianstd'] = sqrt(params['gaussianvariance'])
 
@@ -109,7 +104,7 @@ def parse_inputs(X, V, Xv,n_interations=3, convergenceparam=0.2, gaussianvarianc
         warnings.warn('Some grid points are far from any data points. Consider modifying the grid.')
     return params, X, V, Xq 
 
-def barnesn(X, V, Xv, data, n_interations=3, convergenceparam=0.2, gaussianvariance=float('nan')):
+def barnesn(X, V, Xv, data, Xq, gridX, gridY, n_interations=3, convergenceparam=0.2, gaussianvariance=float('nan')):
     params, X, V, Vq = parse_inputs(X,V,Xv,n_interations, convergenceparam, gaussianvariance)
     
     #set up for analysis 
@@ -136,6 +131,6 @@ def barnesn(X, V, Xv, data, n_interations=3, convergenceparam=0.2, gaussianvaria
         f = np.tile(Verr.values, len(outer_grid)).reshape(len(outer_grid),len(V))
         Vq = Vq + np.sum(W[ii]*f,axis=1)
         Verr = calc_Verror(V,Vq,Xcell,ii,data)[1]
-    Vq = Vq.reshape(grid_size[1],grid_size[0])
+    Vq = Vq.reshape(params['grid_size'][1],params['grid_size'][0])
     #Vq = Vq.reshape(grid_size)
     return Vq, params
