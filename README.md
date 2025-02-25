@@ -1,6 +1,9 @@
 # barnesn
 
-This repo contains code for implementing Barnes objective analysis, which is used for interpolating scattered data points onto a grid.  The code is translated from the [Barnes interpolation (Barnes objective analysis) toolbox](https://www.mathworks.com/matlabcentral/fileexchange/58937-barnes-interpolation-barnes-objective-analysis), originally written in Matlab by Lena Bartell.
+This repo contains code for implementing Barnes objective analysis, which is used for interpolating scattered data points onto a grid.  The code is translated from the [Barnes interpolation (Barnes objective analysis) toolbox](https://www.mathworks.com/matlabcentral/fileexchange/58937-barnes-interpolation-barnes-objective-analysis), originally written in Matlab by Lena Bartell. <br>
+
+Examples using the functions are in the [examples directory](https://github.com/hsynan/barnesn/blob/main/examples/barnes_examples.ipynb) <br>
+The functions themselves are in the [barnesn directory]()
 
 **Original description (from Matlab):** <br>
    BARNESN: Barnes smoothing interpolation of unstructured data
